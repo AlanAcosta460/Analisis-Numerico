@@ -4,6 +4,8 @@ import math
 r = 0 
 v = 0 
 valores = {}
+tol = 0.001
+redondeo = len(str(tol)) - 1
 
 def presentacion() :
     print("****************************************************")
@@ -65,28 +67,28 @@ def biseccion(op) :
         else :
             break
 
-    tol = 0.01
     print(f"\n*** La tolerancia es de {tol} ***\n") 
-    print("\nIteracion\txI\txP\txS\tf(xI)\tf(xP)\tf(xS)\t|xS - xI|\t|xS - xI| <= tol")
+    print("\nIteracion\txI\txP\txS\tf(xI)\t\tf(xP)\t\tf(xS)\t\t|xS - xI|\t|xS - xI| <= tol")
+
     it = 1
     while True :
         if op == 1 :
-            fxI = round(funcion1(xI), 3)
-            fxS = round(funcion1(xS), 3)
+            fxI = round(funcion1(xI), redondeo)
+            fxS = round(funcion1(xS), redondeo)
         else :
-            fxI = round(funcion2(xI), 3)
-            fxS = round(funcion2(xS), 3)
+            fxI = round(funcion2(xI), redondeo)
+            fxS = round(funcion2(xS), redondeo)
         
-        xP = round((xI + xS) / 2, 3)
+        xP = round((xI + xS) / 2, redondeo)
 
         if op == 1 : 
-            fxP = round(funcion1(xP), 3)
+            fxP = round(funcion1(xP), redondeo)
         else :
-            fxP = round(funcion2(xP), 3)
+            fxP = round(funcion2(xP), redondeo)
 
-        dif = round(abs(xS - xI), 3)
+        dif = round(abs(xS - xI), redondeo)
 
-        print(f"{it}\t\t{xI}\t{xP}\t{xS}\t{fxI}\t{fxP}\t{fxS}\t{dif}\t\t{dif <= tol}")
+        print(f"    {it}\t\t{xI}\t{xP}\t{xS}\t{fxI}\t\t{fxP}\t\t{fxS}\t\t{dif}\t\t{dif <= tol}")
 
         if (fxI * fxP) < 0 :
             xS = xP
@@ -111,7 +113,7 @@ def main() :
         if op == 1 :
             x = 0.1
             for i in range(0, 50) :
-                valores[round(x, 1)] = round(funcion1(x), 3)
+                valores[round(x, 1)] = round(funcion1(x), redondeo)
                 x += 0.1
         elif op == 2 :
             global r, v
@@ -123,7 +125,7 @@ def main() :
 
             h = 0.0
             for i in range(0, 50) :
-                valores[round(h, 1)] = round(funcion2(h), 3)
+                valores[round(h, 1)] = round(funcion2(h), redondeo)
                 h += 0.2
 
 
