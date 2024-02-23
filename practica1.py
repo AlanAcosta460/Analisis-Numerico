@@ -1,6 +1,7 @@
 import math
 
-# Variables Globales
+# Parametros
+incremento = 0.1
 r = 0 
 v = 0 
 valores = {}
@@ -38,12 +39,20 @@ def funcion1(x) :
 def funcion2(h) :
     return pow(h, 3) - (3 * r * pow(h, 2)) + ((3 * v) / math.pi)
 
-def tabular() :
+def tabular(op) :
     print("***** Tabulacion *****")
-    print("x\tf(x)")
+    print("x\tf(x)\t\tx\tf(x)\t\tx\tf(x)\t\tx\tf(x)\t\tx\tf(x)")
     
-    for valor in valores : 
-        print(f"{valor}\t{valores[valor]}")
+    if op == 1 :
+        inicio = 0.1 
+    else : 
+        inicio = 0
+    
+    for i in range(0, 10) :
+        for j in range(0, 5) :
+            x = round(inicio + (incremento * i) + (incremento * (10 * j)), redondeo)
+            print(f"{x}\t{valores[x]}", end='     \t')
+        print()
     
 def biseccion(op) :
     print("\n*** Biseccion ***")
@@ -68,7 +77,7 @@ def biseccion(op) :
             break
 
     print(f"\n*** La tolerancia es de {tol} ***\n") 
-    print("\nIteracion\txI\txP\txS\tf(xI)\t\tf(xP)\t\tf(xS)\t\t|xS - xI|\t|xS - xI| <= tol")
+    print("\nIteracion\txI\t\txP\t\txS\t\tf(xI)\t\tf(xP)\t\tf(xS)\t\t|xS - xI|\t|xS - xI| <= tol")
 
     it = 1
     while True :
@@ -88,7 +97,7 @@ def biseccion(op) :
 
         dif = round(abs(xS - xI), redondeo)
 
-        print(f"    {it}\t\t{xI}\t{xP}\t{xS}\t{fxI}\t\t{fxP}\t\t{fxS}\t\t{dif}\t\t{dif <= tol}")
+        print(f"    {it}\t\t{xI}\t\t{xP}\t\t{xS}\t\t{fxI}\t\t{fxP}\t\t{fxS}\t\t{dif}\t\t{'Cumple' if dif <= tol else 'No Cumple'}")
 
         if (fxI * fxP) < 0 :
             xS = xP
@@ -100,7 +109,7 @@ def biseccion(op) :
         
         it += 1
 
-    print(f"\n **** La raiz es {xP} ****\n\n")
+    print(f"\n **** La raiz es aproximadamente {xP} ****\n\n")
     
 def main() :
     presentacion()
@@ -114,7 +123,7 @@ def main() :
             x = 0.1
             for i in range(0, 50) :
                 valores[round(x, 1)] = round(funcion1(x), redondeo)
-                x += 0.1
+                x += incremento
         elif op == 2 :
             global r, v
 
@@ -126,12 +135,11 @@ def main() :
             h = 0.0
             for i in range(0, 50) :
                 valores[round(h, 1)] = round(funcion2(h), redondeo)
-                h += 0.2
+                h += incremento
 
 
         print()
-        tabular()
-
+        tabular(op)
         biseccion(op)
 
         print("Desear realizar otro calculo? (s/n)")
